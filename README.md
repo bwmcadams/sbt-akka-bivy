@@ -7,7 +7,6 @@ with all of your dependencies and configuration files loaded, with a bootable ve
 
 This depends on you having a dependency in your project for AT THE LEAST `akka-kernel`.  It tries to check for it and blows up if it doesnt find it.
 
-------
 Usage 
 ------
 
@@ -36,7 +35,6 @@ You are now given three new actions within `sbt` ( assuming you reloaded your pr
 
 The 'akka' bundle contains a bootable version of your jar, a directory structure with all your dependencies, and a bootup shell script `bootAkka`. 
 
----------
 Settings
 ---------
 There are a number of defaults you can override.   All of these are `defs` in the `AkkaKernelDeployment` trait, so you should redefine them with `override def ...` in your project file.
