@@ -16,6 +16,12 @@
  */
 package sbt_akka_bivy
 
+import sbt._
+
+import java.util.jar.Attributes
+import java.util.jar.Attributes.Name._
+import java.io.File
+
 trait AkkaKernelDeployment extends DefaultProject {
   // Uses some functions swiped from the Akka project's sbt config
 
@@ -55,7 +61,8 @@ trait AkkaKernelDeployment extends DefaultProject {
 SCALA_VERSION=%s
 SCRIPT=$(readlink -f $0)
 export AKKA_HOME=`dirname $SCRIPT`
-java %s -jar $AKKA_HOME/%s
+java %s -jar $AKKA_HOME/%s&
+echo $!
 """.format(buildScalaVersion, jvmArgs, defaultJarPath(".jar").name)
 
   // ---- STOP OVERRIDING STUFF HERE OR IT WILL ALL GO *BOOM* ----
