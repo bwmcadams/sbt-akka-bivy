@@ -65,6 +65,22 @@ java %s -jar $AKKA_HOME/%s&
 echo $!
 """.format(buildScalaVersion, jvmArgs, defaultJarPath(".jar").name)
 
+  def upstartBootScript = """# Upstart file for Akka service - place in /etc/init/<service_name>.conf 
+# Should work on Ubuntu 6.10+, Fedora 9+, Debian, and a few others
+
+start on runlevel [2345]
+stop on runlevel [06] 
+
+console none 
+
+script
+    export AKKA_HOME=<DEFINE ME!!!!>
+    EXEC_USER=<DEFINE ME!!!>
+    EXEC_GROUP=<DEFINE ME!!!>
+    PIDFILE=$AKKA_HOME/akkaSvc.pid
+    start-stop-daemon --start --chuid $EXEC_USER:$EXEC_GROUP --make-pidfile --pidfile $AKKA_HOME/akkaSvc.pid --exec /usr/bin/java -- %s -jar $AKKA_HOME/%s
+end script
+""".format(jvmArgs, defaultJarPath(".jar").name)
   // ---- STOP OVERRIDING STUFF HERE OR IT WILL ALL GO *BOOM* ----
 
 
@@ -99,6 +115,7 @@ echo $!
     FileUtilities.copyFlat(defaultJarPath(".jar") :: Nil, bundleDir / "deploy", log) // It also needs to be in deploy for runtime finds esp. for REST via Jersey
     // Create our akka boot script.
     FileUtilities.write((bundleDir / "bootAkka").asFile, akkaBootScript, log)
+    FileUtilities.write((bundleDir / "upstartAkka").asFile, upstartBootScript, log)
     None 
   } dependsOn(`package`) describedAs("Bundle an Akka MicroKernel for Deployment")
 

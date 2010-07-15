@@ -55,4 +55,13 @@ The default is `-Xms256m -Xmx1g`.
 
 Once your directory is setup, just run `bootAkka` and have fun.  I have specifically tested this with the Jersey REST code to ensure it works ( a few prior iterations didn't).
 
+System Level Process Control via Upstart
+------------------------------------------
+Several distros including Fedora, Ubuntu and Debian support a process control mechanism known as 'upstart'.  As of v 0.2.0 Bivy creates an optional upstart script for you.  You'll find it in your deploy directory as "upstartAkka".
+
+Decide what you want to call your process (e.g. myAkkaSvc) and copy upstartAkka to /etc/init/<serviceName>.conf (e.g. /etc/init/myAkkaSvc.conf).
+
+Edit the file to fill in AKKA_HOME, EXEC_USER and EXEC_GROUP, then run `sudo initctl start <serviceName>`.  Restart currently doesn't work - so you'll need to `stop` and then `start`.
+
+
 Have fun!
