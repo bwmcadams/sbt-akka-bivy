@@ -16,7 +16,7 @@ You will need to add the plugin to your `project/plugins/Plugins.scala`:
 
     class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
           val bumRepo = "Bum Networks Release Repository" at "http://repo.bumnetworks.com/releases"
-          val sbtAkkaBivy = "net.evilmonkeylabs" % "sbt-akka-bivy" % "0.1"
+          val sbtAkkaBivy = "net.evilmonkeylabs" % "sbt-akka-bivy" % "0.2.0"
     }
 
 Then Mix in the AkkaKernelDeployment trait to your Project definition:
